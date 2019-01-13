@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+    #DublinMap{
+        height: 505px;
+        width:38%;
+        margin-left: 60%;
+        margin-top: 1.5%;
+        position: absolute;
+    }
+</style>
+<link rel="stylesheet" href="forecast.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Dublin</title>
+</head>
+<body style="background-image: url(images/background_image.jpg)">
+<div id="DublinMap"></div>
+<script>/* The following code was taken from this website:https://developers.google.com/maps/documentation/javascript/adding-a-google-map. I have used my own API key which was obainted on this website: https://console.developers.google.com/apis/credentials?project=teak-inquiry-185320*/
+function initMap() {
+        var Dublin = {lat: 53.3498053, lng: -6.260309699999993};
+          /*https://www.maps.ie/coordinates.html*/
+        var map = new google.maps.Map(document.getElementById('DublinMap'), {
+          zoom: 11,
+          center: Dublin
+        });
+        var marker = new google.maps.Marker({
+          position: Dublin,
+          map: map
+        });
+      }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtrlvGT4lYVoN1jv8bZIXsCT3EAFnhV0A&callback=initMap">
+</script> 
+<div class="container">
+<div class="textbox">
+<h1><a href="https://fontmeme.com/fancy-fonts/"><img src="https://fontmeme.com/permalink/171110/f9fad2b630d5ad918177732c6f269c10.png" alt="fancy-fonts"></a></h1>
+<p id=p1>How does it work?</p><p id = p2>Simply select the number of days you wish to see the weather forecast for. Select options for Pressure, Humidity and Windspeed. For more details on certain days. Simply click that day in the display table.</p><br>
+  <select id ="dropdown" name="No_of_Days">
+  <option value="0">Select day range</option>
+  <option value="1">1 Day</option>
+  <option value="2">2 Days</option>
+  <option value="3">3 Days</option>
+  <option value="4">4 Days</option>
+  <option value="5">5 Days</option>
+    </select>
+    <br>
+  <input id="pressureBox" type="checkbox">Pressure<br>
+  <input id="humidityBox" type="checkbox">Humidity<br>
+  <input id="windspeedBox" type="checkbox">Windspeed<br>
+    <br>
+  <button id=btn onclick="getDailyData(), closeDiv()">Submit</button>
+<br>
+</div>
+</div>   
+<div id="forecast"></div>
+<br>
+<div id="detailedForecast"></div>
+<script>
+var selected = document.getElementById("dropdown");
+function getDailyData (){                      
+    var xmlhttp = new XMLHttpRequest();
+    var url = "Daily.json";
+    xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) { 
+        var weatherData = JSON.parse(xmlhttp.responseText);    
+        displayJSON(weatherData,selected.options[selected.selectedIndex].value);
+        //https://stackoverflow.com/questions/8832375/how-to-get-selected-value-from-dropdown-list-in-javascript//
+        //https://www.youtube.com/watch?v=rJesac0_Ftw// I used these two resources to figure out how to use the value of the selection in the dropdown list. The displayJSON function originally jus displayed one day for me on submit, regardless of selection. In the video their function simply used the value to return data. I mashed the two functions into the one by giving it two parameters and it worked.
+    }
+};
+xmlhttp.open("GET", url, true);
+xmlhttp.send(); 
+}; 
+function displayJSON(obj,value) {
+    var daysSelected = parseInt(value)
+    //https://www.w3schools.com/jsref/jsref_parseint.asp
+    var days = obj.list;
+    var pressureBox = document.getElementById("pressureBox").checked;
+    var humidityBox = document.getElementById("humidityBox").checked;
+    var windspeedBox = document.getElementById("windspeedBox").checked;
+    //https://www.w3schools.com/jsref/prop_checkbox_checked.asp
+    var heading = "<p id='heading'>Daily Weather Synopsis</p>"
+    var weatherInfo = "<table class='weatherTable'>";
+    var errorMsg = "<table class='errorMsg'>";
+    var backBtn = "<button id=backBtn onclick='closeDiv1(), closeDiv()'>Click to Hide</button>"
+    if(daysSelected == 0){
+        errorMsg += "<tr><td>ERROR!!! Please select a number to days for which you wish to see the forecast for.</td></tr>"
+       document.getElementById("forecast").innerHTML = errorMsg + backBtn;
+        //I got the idea of adding additional  information to the innerHTML from the following link.https://www.w3schools.com/js/js_json.asp
+        
+    }
+    else{
+    weatherInfo += "<tr><th>Day</th><th>Summary</th><th></th><th>Min Temp</th><th>Max Temp</th>"; 
+        if (pressureBox == true){
+            weatherInfo += "<th>Pressure</th>";
+        }
+        if (humidityBox == true){
+            weatherInfo += "<th>Humidity</th>";
+        }
+        if (windspeedBox == true){
+            weatherInfo += "<th>Wind Speed</th>";
+        }
+    
+            "</tr>";
+    for (var i=0; i < daysSelected; i++) {    
+        var summary = days[i].weather[0].description;
+        var icon = days[i].weather[0].icon;
+        var minTemp = days[i].temp.min;
+        var maxTemp = days[i].temp.max;
+        var pressure = days[i].pressure;
+        var humidity = days[i].humidity;
+        var windspeed = days[i].speed;
+
+        weatherInfo += "<tr><td><button id='btn2' onclick='getDetailedData()'>" + (i+1) + "</button></td><td id='description'>" + summary + "</td><td><img class='icons' src='http://openweathermap.org/img/w/" + icon + ".png'/></td><td>" + minTemp + "&#8451;</td><td>" + maxTemp + "&#8451;</td>";
+            if (pressureBox == true){
+              weatherInfo += "<td>"+ pressure + " hPa</td>";
+            }
+            if (humidityBox == true){
+            weatherInfo += "<td>" + humidity + " % </td>";
+            }
+            if (windspeedBox == true){
+                weatherInfo += "<td>" + windspeed + " meter/sec </td>";
+            }
+            "</tr>";
+        //Used this link to learn how to use the value of checkboxes and if statements:https://www.w3schools.com/jsref/prop_checkbox_checked.asp
+        }
+    weatherInfo += "</table>";
+    document.getElementById("forecast").innerHTML = heading + weatherInfo+ backBtn;
+     // used the example from lecture 11 Sample files to create this table (readColorData.html)
+    }
+}
+function getDetailedData(){
+            var xmlhttp2 = new XMLHttpRequest();
+            var url2 = "Detailed.json";
+            xmlhttp2.onreadystatechange = function(){
+            if(xmlhttp2.readyState == 4 && xmlhttp2.status == 200){
+            var detailedInfo = JSON.parse(xmlhttp2.responseText);
+                displayDetailed(detailedInfo,selected.options[selected.selectedIndex].value);
+            }
+        };
+    xmlhttp2.open("GET", url2, true);
+    xmlhttp2.send();
+}    
+function displayDetailed(obj,value){
+        var daysSelected = parseInt(value)
+        var deetdays = obj.list;
+        var heading = "<p id=heading>More Detailed Forecast.</p>"
+        var detailedTable = "<table class='weatherTable'>";
+        var backBtn = "<button id=backBtn onclick='closeDiv()'>Click to Hide</button>"
+        detailedTable += "<tr><th>Day</th><th>Summary</th><th></th><th>Temp</th><th>Pressure</th><th>Humidity</th><th>Wind Speed</th></tr>";
+
+            if (daysSelected == 1){
+                i = 0;
+            } else if (daysSelected == 2){
+                i = 8;
+            } else if (daysSelected == 3){
+                i = 16;
+            } else if (daysSelected == 4){
+                i = 24;
+            } else {
+                i = 32;
+            }
+        date = i+8
+        while (i < date){   
+            var time = deetdays[i].dt_txt;
+            var descrip = deetdays[i].weather[0].description;
+            var icon2 = deetdays[i].weather[0].icon;
+            var temp = deetdays[i].main.temp;
+            var pressure2 = deetdays[i].main.pressure;
+            var humidity2 = deetdays[i].main.humidity;
+            var windspeed2 = deetdays[i].wind.speed;
+
+           detailedTable += "<tr><td>" + time +"</td><td id='description'>" + descrip + "</td><td><img class='icons' src='http://openweathermap.org/img/w/" + icon2 + ".png'/></td><td>" + temp + "&#8451;</td><td>"+ pressure2 + " hPa</td><td>" + humidity2 + " % </td><td>" + windspeed2 + " meter/sec </td></tr>";
+                i++
+        }
+        detailedTable += "</table>";
+        document.getElementById("detailedForecast").innerHTML =  heading + detailedTable + backBtn;
+}
+function closeDiv1(){
+    document.getElementById("forecast").innerHTML = ""
+}
+function closeDiv() {
+    document.getElementById("detailedForecast").innerHTML =" "
+}
+    //I got the idea for these functions on the following website. https://www.w3schools.com/js/js_window_history.asp. It didn't work for me so I edited it so suit me need.
+</script>
+</body>
+</html>
+

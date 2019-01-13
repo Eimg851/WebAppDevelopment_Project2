@@ -1,0 +1,158 @@
+html, body {
+    max-width: 100%;
+}
+body{
+    font-family: 'Roboto Condensed';
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size:cover;
+    float: left;
+}
+h1{
+    text-align: center;
+}
+div.container{
+    width:60%;
+    padding-left: 1%;
+    height: auto;
+    position: relative;
+}
+div.textbox{
+    width: 97%;
+    margin-top: 2.4%;
+    height: auto;
+    padding-top:1%;
+    background-color: rgba(254, 254, 254, 0.5);
+    padding-bottom: 2%;
+}
+#p1{
+    text-align: left;
+    font-weight: bold;
+    margin-left: 5%;
+    color:darkgreen;
+    font-size: 25px; 
+    text-decoration: underline;
+}
+#p2{
+    float: left;
+    margin-left: 2%;
+    margin-right: 2%;
+    color:darkgreen;
+    font-size: 20px;
+    
+}
+#dropdown{
+    width: 40%;
+    margin-left: 30%;
+    font-size: 20px;
+    color: darkkhaki;
+    margin-bottom: 3%;
+}
+#dropdown2{
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 2%;
+    font-size: 20px;
+    color: darkkhaki;
+    margin-bottom: 2%; 
+}
+#pressureBox{
+    float: left;
+    margin-left: 40%;
+}
+#humidityBox{
+   float: left;
+    margin-left: 40%;
+}
+#windspeedBox{
+   float: left;
+    margin-left: 40%;
+}
+#btn{
+    width: 40%;
+    margin-left: 30%;
+    height: 30px;
+    font-family:inherit;
+    color: darkolivegreen;
+    font-size: 20px;
+}
+#btn:hover{
+    background-color: darkolivegreen;
+    color: floralwhite;
+}
+#btn2{
+    width: 60%;
+    height: 30px;
+    font-family:inherit;
+    color: darkolivegreen;
+    font-size: 20px;  
+}
+#btn2:hover{
+    background-color: darkolivegreen;
+    color: floralwhite;   
+}
+#forecast{
+    float: left;
+    height: auto;
+    position: relative;
+    margin-top: 4%;
+    margin-bottom: 2%;
+    width: 90%;
+    margin-left: 5%;
+    background-color:rgba(254, 254, 254, 0.65);
+}
+#detailedForecast{
+    float: left;
+    height: auto;
+    position: relative;
+    width: 70%;
+    margin-left: 15%;
+    margin-bottom: 2%;
+    background-color:rgba(254, 254, 254, 0.65);
+}
+.weatherTable{
+    width: 100%;
+    font-size: 20px;
+}
+td{
+    text-align: center;
+}
+th, td {
+    border-bottom: 1px solid rgb(60, 60, 60);
+}
+th{
+    background-color: rgba(254, 254, 254, 0);
+    color: darkgreen;
+}
+tr:nth-child(even) {
+    background-color:rgb(249, 216, 162);
+    /*https://www.w3schools.com/css/tryit.asp?filename=trycss_table_color*/
+    /*https://www.google.ie/search?q=css+color+picker&rlz=1C5CHFA_enIE730IE730&oq=css+color+picker&aqs=chrome..69i57j69i60j0l4.2506j0j7&sourceid=chrome&ie=UTF-8*/
+}
+#description{
+    text-transform: capitalize;
+    /*https://www.w3schools.com/cssref/pr_text_text-transform.asp8*/
+}
+.errorMsg{
+    width: 100%;
+    font-size: 30px;
+    padding: 2%;
+    background-color: rgba(254, 254, 254, 0.5);
+    color: red;
+    text-align: center;
+}
+#backBtn{
+    margin: 1%;
+    padding: 1%;
+    width: 30%;
+    margin-left: 35%;
+    color: olive;
+    font-size: 20px;
+    }
+#heading{
+    color: olive;
+    font-size: 23px;
+    text-align: center;
+    text-decoration: underline;
+}
