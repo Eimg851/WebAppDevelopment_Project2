@@ -1,3 +1,6 @@
+Web Application that uses weather data from OpenWeatherMaps in JSON format to display current and forecasted weather. Options to view pressure, humidity and wind details.
+
+
 Have named my html page 'forecast.html'.
 On opening the page there is a short description and a simple form included in the div 'container'. The googlemap which focuses on Dublin is displayed on the left.
 Simple form found in forecast.html (line 41 -54)
