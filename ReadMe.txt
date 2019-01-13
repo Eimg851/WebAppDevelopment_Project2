@@ -1,4 +1,4 @@
-Web Application that uses weather data from OpenWeatherMaps in JSON format to display current and forecasted weather. Options to view pressure, humidity and wind details.
+Web Application that uses weather data from OpenWeatherMaps in JSON format to display current and forecasted weather. Options to view pressure, humidity and wind details. HTML, CSS and Javascript used alongside JSON.
 
 
 Have named my html page 'forecast.html'.
